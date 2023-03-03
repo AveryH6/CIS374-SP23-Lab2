@@ -6,7 +6,7 @@ namespace Lab2
     {
         static void Main(string[] args)
         {
-            MaxHeap<int> heap1 = new MaxHeap<int>();
+            MinHeap<int> heap1 = new MinHeap<int>();
 
             heap1.Add(4);
             heap1.Add(3);

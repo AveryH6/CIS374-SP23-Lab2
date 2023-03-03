@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Lab2
 {
@@ -33,7 +34,7 @@ namespace Lab2
 
         /// <summary>
         /// Returns the min item but does NOT remove it.
-        /// Time complexity: O(?).
+        /// Time complexity: O(1).
         /// </summary>
         public T Peek()
         {
@@ -48,7 +49,7 @@ namespace Lab2
         // TODO
         /// <summary>
         /// Adds given item to the heap.
-        /// Time complexity: O(?).
+        /// Time complexity: O( log(N) ).
         /// </summary>
         public void Add(T item)
         {
@@ -80,7 +81,17 @@ namespace Lab2
         /// </summary>
         public T ExtractMax()
         {
-            // linear search
+            if (IsEmpty)
+            {
+                throw new Exception("Empty Heap");
+            }
+
+            T max = array[Count - 1];
+
+            Count--;
+
+            return max;
+
 
         }
 
@@ -105,9 +116,59 @@ namespace Lab2
             Count--;
 
             // trickle down from root (first)
-            TrickleDown(0);
+            if( Count > 0)
+            {
+                TrickleDown(0);
+            }
 
             return min;
+        }
+
+        // TODO
+        /// <summary>
+        /// Updates the first element with the given value from the heap.
+        /// Time complexity: O( ? )
+        /// </summary>
+        public void Update(T oldValue, T newValue)
+        {
+            for (int i = 0; i < Count - 1; i++)
+            {
+                if (array[i].CompareTo(oldValue) == 0)
+                {
+                    array[i] = array[Count - 1];
+                    oldValue = newValue;
+                    TrickleUp(i);
+                    break;
+                }
+            }
+
+
+        }
+
+        // TODO
+        /// <summary>
+        /// Removes the first element with the given value from the heap.
+        /// Time complexity: O( log(N) )
+        /// </summary>
+        public void Remove(T value)
+        {
+
+            if (IsEmpty)
+            {
+                throw new Exception("Empty Heap");
+            }
+
+            for ( int i = 0; i < Count - 1; i++)
+            {
+                if (array[i].CompareTo(value) == 0)
+                {
+                    array[i] = array[Count - 1];
+                    Count--;
+                    TrickleDown(i);
+                    break;
+                }
+            }
+
         }
 
         // TODO
@@ -119,9 +180,9 @@ namespace Lab2
         {
             // linear search
 
-            foreach (var item in array)
+            for (int i = 0; i < Count; i++)
             {
-                if (item.CompareTo(value) == 0)
+                if (array[i].CompareTo(value) == 0)
                 {
                     return true;
                 }
@@ -135,7 +196,19 @@ namespace Lab2
         // Time Complexity: O( log(n) )
         private void TrickleUp(int index)
         {
-
+            while (index > 0)
+            {
+                int parent = Parent(index);
+                if( array[index].CompareTo(array[parent]) == 1 )
+                {
+                    return;
+                }
+                else
+                {
+                    Swap(index, parent);
+                    index = parent;
+                }
+            }
 
         }
 
@@ -143,6 +216,38 @@ namespace Lab2
         // Time Complexity: O( log(n) )
         private void TrickleDown(int index)
         {
+            int child = LeftChild(index);
+            T value = array[index];
+
+            while (child < Count)
+            {
+                
+                T maxValue = value;
+                int maxIndex = -1;
+                int i = 0;
+
+                for( i = 0; i < 2 && i + child < Count; i++)
+                {
+                    if (array[i+child].CompareTo(maxValue) == -1)
+                    {
+                        maxValue = array[i + child];
+                        maxIndex = i + child;
+                    }
+                }
+
+                if( maxValue.CompareTo(value) == 0)
+                {
+                    return;
+                }
+
+                else
+                {
+                    Swap(index, maxIndex);
+                    index = maxIndex;
+                    child = 2 * index + 1;
+                }
+            }
+
 
         }
 
@@ -152,6 +257,7 @@ namespace Lab2
         /// </summary>
         private static int Parent(int position)
         {
+            return (position - 1) / 2;
 
         }
 
@@ -161,6 +267,8 @@ namespace Lab2
         /// </summary>
         private static int LeftChild(int position)
         {
+            return (2 * position) + 1;
+            
         }
 
         // TODO
@@ -169,6 +277,8 @@ namespace Lab2
         /// </summary>
         private static int RightChild(int position)
         {
+            return (2 * position) + 2;
+
         }
 
         private void Swap(int index1, int index2)
