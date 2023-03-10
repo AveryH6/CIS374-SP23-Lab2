@@ -116,7 +116,7 @@ namespace Lab2
             Count--;
 
             // trickle down from root (first)
-            if( Count > 0)
+            if (Count > 0)
             {
                 TrickleDown(0);
             }
@@ -141,7 +141,7 @@ namespace Lab2
                 if (array[i].CompareTo(oldValue) == 0)
                 {
                     ;
-                    
+
                 }
             }
 
@@ -165,11 +165,10 @@ namespace Lab2
                 for (int i = 0; i < Count; i++)
                 {
 
-                    if( array[i].CompareTo(value) == 0 )
+                    if (array[i].CompareTo(value) == 0)
                     {
                         array[i] = array[Count - 1];
                         Count--;
-                        TrickleUp(i);
                     }
 
                 }
@@ -206,7 +205,7 @@ namespace Lab2
             while (index > 0)
             {
                 int parent = Parent(index);
-                if( array[index].CompareTo(array[parent]) == 1 )
+                if (array[index].CompareTo(array[parent]) == 1)
                 {
                     return;
                 }
@@ -228,21 +227,21 @@ namespace Lab2
 
             while (child < Count)
             {
-                
+
                 T maxValue = value;
                 int maxIndex = -1;
                 int i = 0;
 
-                for( i = 0; i < 2 && i + child < Count; i++)
+                for (i = 0; i < 2 && i + child < Count; i++)
                 {
-                    if (array[i+child].CompareTo(maxValue) == -1)
+                    if (array[i + child].CompareTo(maxValue) == -1)
                     {
                         maxValue = array[i + child];
                         maxIndex = i + child;
                     }
                 }
 
-                if( maxValue.CompareTo(value) == 0)
+                if (maxValue.CompareTo(value) == 0)
                 {
                     return;
                 }
@@ -275,7 +274,7 @@ namespace Lab2
         private static int LeftChild(int position)
         {
             return (2 * position) + 1;
-            
+
         }
 
         // TODO
@@ -304,5 +303,6 @@ namespace Lab2
 
     }
 }
+
 
 

@@ -140,6 +140,7 @@ namespace Lab2
         /// </summary>
         public void Remove(T value)
         {
+
             if (IsEmpty)
             {
                 throw new Exception("Empty Heap");
@@ -154,9 +155,10 @@ namespace Lab2
                     {
                         array[i] = array[Count - 1];
                         Count--;
-                        TrickleUp(i);
                     }
+
                 }
+
             }
 
         }
