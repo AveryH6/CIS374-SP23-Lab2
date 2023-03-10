@@ -131,17 +131,19 @@ namespace Lab2
         /// </summary>
         public void Update(T oldValue, T newValue)
         {
-            for (int i = 0; i < Count - 1; i++)
+            if (IsEmpty)
+            {
+                throw new Exception("Empty Heap");
+            }
+
+            for (int i = 0; i < Count; i++)
             {
                 if (array[i].CompareTo(oldValue) == 0)
                 {
-                    array[i] = array[Count - 1];
-                    oldValue = newValue;
-                    TrickleUp(i);
-                    break;
+                    ;
+                    
                 }
             }
-
 
         }
 
@@ -158,15 +160,20 @@ namespace Lab2
                 throw new Exception("Empty Heap");
             }
 
-            for ( int i = 0; i < Count - 1; i++)
+            else
             {
-                if (array[i].CompareTo(value) == 0)
+                for (int i = 0; i < Count; i++)
                 {
-                    array[i] = array[Count - 1];
-                    Count--;
-                    TrickleDown(i);
-                    break;
+
+                    if( array[i].CompareTo(value) == 0 )
+                    {
+                        array[i] = array[Count - 1];
+                        Count--;
+                        TrickleUp(i);
+                    }
+
                 }
+
             }
 
         }

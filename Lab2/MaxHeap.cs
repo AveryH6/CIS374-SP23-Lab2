@@ -140,20 +140,24 @@ namespace Lab2
         /// </summary>
         public void Remove(T value)
         {
-            if (Count == 0)
+            if (IsEmpty)
             {
-                return;
+                throw new Exception("Empty Heap");
             }
 
-            if (Count == 1)
+            else
             {
-                Count--;
-                return;
-            }
+                for (int i = 0; i < Count; i++)
+                {
 
-            array[0] = array[Count - 1];
-            Count--;
-            TrickleDown(0);
+                    if (array[i].CompareTo(value) == 0)
+                    {
+                        array[i] = array[Count - 1];
+                        Count--;
+                        TrickleUp(i);
+                    }
+                }
+            }
 
         }
 
@@ -166,14 +170,9 @@ namespace Lab2
         {
             // linear search
 
-            if( IsEmpty )
+            for (int i = 0; i < Count; i++)
             {
-                throw new Exception("Empty Heap");
-            }
-
-            foreach (var item in array)
-            {
-                if (item.CompareTo(value) == 0)
+                if (array[i].CompareTo(value) == 0)
                 {
                     return true;
                 }
