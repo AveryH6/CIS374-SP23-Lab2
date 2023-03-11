@@ -135,15 +135,34 @@ namespace Lab2
             {
                 throw new Exception("Empty Heap");
             }
-
-            for (int i = 0; i < Count; i++)
+            else
             {
-                if (array[i].CompareTo(oldValue) == 0)
+                if (!Contains(oldValue))
                 {
-                    ;
+                    throw new Exception();
+                }
+                else
+                {
+                    for (int i = 0; i < Count; i++)
+                    {
+                        if (array[i].CompareTo(oldValue) == 0)
+                        {
+                            array[i] = newValue;
 
+                            if (newValue.CompareTo(oldValue) == -1)
+                            {
+                                TrickleUp(i);
+                            }
+
+                            else
+                            {
+                                TrickleDown(i);
+                            }
+                        }
+                    }
                 }
             }
+            
 
         }
 

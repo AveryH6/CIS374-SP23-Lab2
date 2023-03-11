@@ -128,7 +128,37 @@ namespace Lab2
         /// </summary>
         public void Update(T oldValue, T newValue)
         {
+            if (IsEmpty)
+            {
+                throw new Exception("Empty Heap");
+            }
+            else
+            {
+                if (!Contains(oldValue))
+                {
+                    throw new Exception();
+                }
+                else
+                {
+                    for (int i = 0; i < Count; i++)
+                    {
+                        if (array[i].CompareTo(oldValue) == 0)
+                        {
+                            array[i] = newValue;
 
+                            if (newValue.CompareTo(oldValue) == -1)
+                            {
+                                TrickleUp(i);
+                            }
+
+                            else
+                            {
+                                TrickleDown(i);
+                            }
+                        }
+                    }
+                }
+            }
 
 
         }
